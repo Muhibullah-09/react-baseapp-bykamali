@@ -1,4 +1,3 @@
- 
 name: Deploy Website
 
 on: [push]
@@ -6,22 +5,25 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Deploying to surge
+    name: React basic app Deploying to surge
     steps:
-      - uses: actions/checkout@v2
-      - name: Install Node.js
-        uses: actions/setup-node@v2-beta
+    - uses: actions/checkout@v2
+      
+    - name: Install NodeJS
+      uses: actions/setup-node@v2-beta
         with:
           node-version: 12
-      - name: Prepare for Yarn Installation
-        run: curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-      - name: install yarn
-        run: sudo apt update && sudo apt install yarn
-      - name: Build React App
-        run: yarn build
-      - name: Install Surge
-        run: npm install -g surge
-      - name: Run surge
-        run: surge ./build bootcamp_react_ziakhan.surge.sh --token ${{ secrets.SURGE_TOKEN }}
-
-  
+          
+          
+    - uses: borales/actions-yarn@v2.0.0
+      with:
+          cmd: install # will run `yarn install` command   
+          
+    - name: Build React App
+      run: yarn build
+     
+    - name: Install surge
+      run: npm install --global surge
+     
+    - name: Deploy to surge
+      run: surge ./GitHub reactbasicapp-bykamali.surge.su ${{secrets.SURGE_TOKEN}}
