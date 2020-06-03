@@ -26,4 +26,4 @@ jobs:
       run: npm install --global surge
      
     - name: Deploy to surge
-      run: surge ./GitHub/react-baseapp-bykamali reactbasicapp-bykamali.surge.sh ${{secrets.SURGE_TOKEN}}
+      run: surge ./ reactbasicapp-bykamali.surge.sh --token ${{secrets.SURGE_TOKEN}}
